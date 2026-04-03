@@ -52,18 +52,16 @@ playwright install
 ## Run test locally
 
 ```bash
-pytest tests/test_cookie_ing.py
+pytest tests/test_cookie_ing_local.py
 ```
 
 ## Run test in multiple browsers
 
 ```bash
-pytest tests/test_cookie_ing.py --browser chromium --browser firefox --browser webkit
+pytest tests/test_cookie_ing_local.py --browser chromium --browser firefox --browser webkit
 ```
-## CI pipeline
+## CI pipeline - limitation
+The GitHub Actions pipeline is included to demonstrate automated execution in multiple browsers.
 
-The repository includes a GitHub Actions pipeline that:
-- installs Python dependencies
-- installs Playwright browsers
-- runs the automated test
-- executes the test for Chromium, Firefox, and WebKit
+During execution on public GitHub runners, the ING website display an anti-bot/security verification page instead of the main page. In that case, the live  test against the production website cannot continue automatically.
+The test itself works correctly in a local environment, where the normal cookie consent flow is available.

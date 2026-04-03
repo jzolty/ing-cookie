@@ -35,7 +35,8 @@ jobs:
 
       - name: Run Playwright test
         run: |
-          pytest tests/test_cookie_ing.py --browser ${{ matrix.browser }}
+          pytest tests/test_cookie_ing_local.py --browser ${{ matrix.browser }}
+
       - name: Upload test artifacts
         if: always()
         uses: actions/upload-artifact@v4

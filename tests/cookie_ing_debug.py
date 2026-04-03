@@ -1,9 +1,7 @@
 from pathlib import Path
 from playwright.sync_api import Page, BrowserContext, TimeoutError as PlaywrightTimeoutError
 
-
 RESULTS_DIR = Path("test-results")
-
 
 def save_debug_artifacts(page: Page, name: str) -> None:
     RESULTS_DIR.mkdir(exist_ok=True)
@@ -22,14 +20,12 @@ def open_cookie_settings(page: Page) -> None:
     page.wait_for_timeout(3000)
 
     save_debug_artifacts(page, "before-opening-cookie-settings")
-
     
     banner_button = page.locator("button.js-cookie-policy-settings-button")
     if banner_button.count() > 0:
         banner_button.first.click()
         return
 
-    
     page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
     page.wait_for_timeout(1000)
 
@@ -43,7 +39,6 @@ def open_cookie_settings(page: Page) -> None:
     raise AssertionError(
         "Could not open cookie settings: neither banner button nor footer button was found."
     )
-
 
 def test_accept_analytics_cookies(page: Page, context: BrowserContext):
     RESULTS_DIR.mkdir(exist_ok=True)
