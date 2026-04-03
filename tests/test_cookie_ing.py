@@ -1,6 +1,3 @@
-from playwright.sync_api import Page, TimeoutError
-
-
 from pathlib import Path
 from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError
 
@@ -9,27 +6,27 @@ def open_cookie_settings(page: Page) -> None:
     page.wait_for_load_state("domcontentloaded")
 
     try:
-        page.get_by_role("button", name="Dostosuj").click(timeout=10000)
+        page.locator("button.js-cookie-policy-settings-button").click(timeout=15000)
         return
     except PlaywrightTimeoutError:
         pass
 
     page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
     try:
-        cookie_settings_button = page.get_by_role("button", name="Ustawienia cookie")
-        cookie_settings_button.scroll_into_view_if_needed()
-        cookie_settings_button.click(timeout=10000)
+        page.locator("button.js-cookie-policy-deputed-settings-button").click(timeout=15000)
         return
     except PlaywrightTimeoutError:
         pass
 
     Path("test-results").mkdir(exist_ok=True)
     page.screenshot(path="test-results/cookie-settings-not-found.png", full_page=True)
+    Path("test-results/page.html").write_text(page.content(), encoding="utf-8")
 
     raise AssertionError(
-        "Could not open cookie settings: neither 'Dostosuj' button nor "
-        "'Ustawienia cookie' button was found."
+        "Could not open cookie settings using either banner button "
+        "or footer cookie settings button."
     )
+
 
 def test_accept_analytics_cookies(page: Page, context):
     page.goto("https://www.ing.pl")
