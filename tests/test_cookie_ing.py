@@ -15,7 +15,7 @@ def open_cookie_settings(page: Page) -> None:
         page.locator("button.js-cookie-policy-deputed-settings-button").click()
         return
 
-    # print("No cookie banner or cookie settings button found - continuing test")
+    print("No cookie banner or cookie settings button found - continuing test")
 
 
 def test_accept_analytics_cookies(page: Page, context):
