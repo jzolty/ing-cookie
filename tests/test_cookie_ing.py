@@ -38,13 +38,18 @@ def open_cookie_settings(page: Page) -> None:
         footer_button.first.click()
         return
 
+<<<<<<< HEAD
     save_debug_artifacts(page, "cookie-settings-not-found")
+=======
+    print("No cookie banner or cookie settings button found - continuing test")
+>>>>>>> 8e153a3ee790c605f7ff49313c1d64d7f1bc5c22
 
     raise AssertionError(
         "Could not open cookie settings: neither banner button nor footer button was found."
     )
 
 
+<<<<<<< HEAD
 def test_accept_analytics_cookies(page: Page, context: BrowserContext):
     RESULTS_DIR.mkdir(exist_ok=True)
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
@@ -89,3 +94,9 @@ def test_accept_analytics_cookies(page: Page, context: BrowserContext):
 
     finally:
         context.tracing.stop(path=str(RESULTS_DIR / "trace.zip"))
+=======
+    assert consent_cookie["value"] == "3", \
+        "cookiePolicyGDPR has unexpected value"
+    assert details_cookie["value"] != "", \
+        "cookiePolicyGDPR__details should not be empty"
+>>>>>>> 8e153a3ee790c605f7ff49313c1d64d7f1bc5c22
