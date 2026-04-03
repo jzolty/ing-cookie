@@ -1,4 +1,13 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, TimeoutError
+
+
+def open_cookie_settings(page: Page) -> None:
+    try:
+        page.get_by_role("button", name="Dostosuj").click(timeout=5000)
+    except TimeoutError:
+        cookie_settings_link = page.get_by_role("link", name="Ustawienia cookie")
+        cookie_settings_link.scroll_into_view_if_needed()
+        cookie_settings_link.click()
 
 
 def test_accept_analytics_cookies(page: Page, context):
@@ -7,7 +16,8 @@ def test_accept_analytics_cookies(page: Page, context):
     cookies_before = context.cookies()
     names_before = [c["name"] for c in cookies_before]
 
-    page.get_by_role("button", name="Dostosuj").click()
+    open_cookie_settings(page)
+
     page.get_by_role("switch").nth(1).click()
     page.get_by_role("button", name="Zaakceptuj zaznaczone").click()
 
