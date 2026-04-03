@@ -1,4 +1,4 @@
-# ING Cookie Consent Test
+# ING Analytical Cookie Consent Test
 
 This project contains an automated test written in Python using Playwright and pytest.
 
